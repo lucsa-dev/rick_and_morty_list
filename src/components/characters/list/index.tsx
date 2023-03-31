@@ -1,9 +1,12 @@
 "use client";
 
-import { ReqRickAndMortyApi, ResultCharacters } from "@/types/characters.type";
+import { selectCharacters } from "@/redux/sliceCharacters";
+import { ResultCharacters } from "@/types/characters.type";
 import Image from "next/image";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { CharacterProps } from "../characters.type";
+import Card from "./card";
 
 const CharacterItem = styled.li`
   display: flex;
@@ -11,12 +14,7 @@ const CharacterItem = styled.li`
   align-items: center;
   margin: 10px;
   padding: 10px;
-  border: 1px solid #ccc;
   border-radius: 5px;
-
-  &:hover {
-    box-shadow: 0 0 5px #ccc;
-  }
 
   h3 {
     margin-top: 10px;
@@ -34,17 +32,13 @@ const CharacterGrid = styled.ul`
   margin: 0;
 `;
 export default function List({ results }: { results: ResultCharacters[] }) {
+  const characters = useSelector(selectCharacters);
+
   return (
     <CharacterGrid>
-      {results.map((character: ResultCharacters) => (
+      {characters.map((character: ResultCharacters) => (
         <CharacterItem key={character.id}>
-          <Image
-            src={character.image}
-            alt={character.name}
-            width={300}
-            height={300}
-          />
-          <h3>{character.name}</h3>
+          <Card character={character} />
         </CharacterItem>
       ))}
     </CharacterGrid>

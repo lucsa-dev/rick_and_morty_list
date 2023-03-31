@@ -2,12 +2,22 @@ import Characters from "@/components/characters";
 import { ReqRickAndMortyApi, ResultCharacters } from "@/types/characters.type";
 import Head from "next/head";
 import Image from "next/image";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 type HomeProps = {
   characters: ReqRickAndMortyApi<ResultCharacters>;
 };
 export default function Home({ characters }: HomeProps) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: "characters/setCharacters",
+      payload: characters.results,
+    });
+  }, [characters.results, dispatch]);
+
   const Main = styled.div`
     background-image: url("bg.jpeg");
     padding: 0px;
@@ -39,10 +49,15 @@ export default function Home({ characters }: HomeProps) {
 export async function getServerSideProps(context: any) {
   const query = context.query;
   let path = "https://rickandmortyapi.com/api/character";
-  if (query.page) {
-    path = `${path}?page=${query.page}`;
+
+  const queryParams = new URLSearchParams(query).toString();
+
+  if (queryParams) {
+    path = `${path}?${queryParams}`;
   }
+
   const res = await fetch(path);
+
   const data = await res.json();
   return {
     props: {
