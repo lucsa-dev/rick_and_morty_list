@@ -1,16 +1,17 @@
-import { ReqRickAndMortyApi, ResultCharacters } from "@/types/characters.type";
+import { selectCharacters } from "@/redux/sliceCharacters";
+import { useSelector } from "react-redux";
+import Search from "../search";
 import List from "./list";
 import Pagination from "./list/pagination";
+import SearchFilter from "./../search/filters";
 
-export default function Characters({
-  characters,
-}: {
-  characters: ReqRickAndMortyApi<ResultCharacters>;
-}) {
+export default function Characters() {
+  const characters = useSelector(selectCharacters);
   return (
     <div>
       <Pagination info={characters.info} />
-      <List results={characters.results} />
+      <SearchFilter />
+      <List characters={characters.results} />
     </div>
   );
 }

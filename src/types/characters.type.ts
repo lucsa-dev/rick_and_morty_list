@@ -1,14 +1,9 @@
 export type ReqRickAndMortyApi<T> = {
-  info: {
-    count: number;
-    pages: number;
-    next: string;
-    prev: string;
-  };
+  info: info;
   results: T[];
 };
 
-export type ResultCharacters = {
+export type ResultCharacter = {
   id: number;
   name: string;
   status: string;
@@ -27,4 +22,11 @@ export type ResultCharacters = {
     name: string;
     url: string;
   };
+};
+
+export type info = {
+  count: number;
+  pages: number;
+  next: string;
+  prev: string;
 };

@@ -1,11 +1,10 @@
 "use client";
 
 import { selectCharacters } from "@/redux/sliceCharacters";
-import { ResultCharacters } from "@/types/characters.type";
+import { ResultCharacter } from "@/types/characters.type";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { CharacterProps } from "../characters.type";
 import Card from "./card";
 
 const CharacterItem = styled.li`
@@ -31,12 +30,14 @@ const CharacterGrid = styled.ul`
   padding: 0;
   margin: 0;
 `;
-export default function List({ results }: { results: ResultCharacters[] }) {
-  const characters = useSelector(selectCharacters);
-
+export default function List({
+  characters,
+}: {
+  characters: ResultCharacter[];
+}) {
   return (
     <CharacterGrid>
-      {characters.map((character: ResultCharacters) => (
+      {characters.map((character: ResultCharacter) => (
         <CharacterItem key={character.id}>
           <Card character={character} />
         </CharacterItem>

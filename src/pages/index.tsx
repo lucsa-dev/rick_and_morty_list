@@ -1,22 +1,23 @@
 import Characters from "@/components/characters";
-import { ReqRickAndMortyApi, ResultCharacters } from "@/types/characters.type";
+import { ReqRickAndMortyApi, ResultCharacter } from "@/types/characters.type";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 type HomeProps = {
-  characters: ReqRickAndMortyApi<ResultCharacters>;
+  characters: ReqRickAndMortyApi<ResultCharacter>;
 };
 export default function Home({ characters }: HomeProps) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({
       type: "characters/setCharacters",
-      payload: characters.results,
+      payload: characters,
     });
-  }, [characters.results, dispatch]);
+  }, [characters, dispatch]);
 
   const Main = styled.div`
     background-image: url("bg.jpeg");
@@ -33,13 +34,15 @@ export default function Home({ characters }: HomeProps) {
         <title>Rick And Morty</title>
       </Head>
       <Main>
-        <Logo
-          src="/logo.png"
-          width={400}
-          height={80}
-          alt={"rick and morty logo"}
-        />
-        <Characters characters={characters} />
+        <Link href="/">
+          <Logo
+            src="/logo.png"
+            width={400}
+            height={80}
+            alt={"rick and morty logo"}
+          />
+        </Link>
+        <Characters />
       </Main>
     </div>
   );
@@ -48,7 +51,7 @@ export default function Home({ characters }: HomeProps) {
 //serverside props
 export async function getServerSideProps(context: any) {
   const query = context.query;
-  let path = "https://rickandmortyapi.com/api/character";
+  let path = `${process.env.NEXT_PUBLIC_SERVER_URL}/character`;
 
   const queryParams = new URLSearchParams(query).toString();
 

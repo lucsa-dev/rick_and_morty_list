@@ -1,4 +1,4 @@
-import { ResultCharacters } from "@/types/characters.type";
+import { ResultCharacter } from "@/types/characters.type";
 import Image from "next/image";
 import { useState } from "react";
 import styled from "styled-components";
@@ -48,7 +48,7 @@ const CardBack = styled(CardFace)`
   transform: rotateY(180deg);
 `;
 
-export default function Card({ character }: { character: ResultCharacters }) {
+export default function Card({ character }: { character: ResultCharacter }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const handleCardClick = () => {
     setIsFlipped((prev) => !prev);
