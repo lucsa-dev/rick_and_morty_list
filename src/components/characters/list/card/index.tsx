@@ -2,51 +2,16 @@ import { ResultCharacter } from "@/types/characters.type";
 import Image from "next/image";
 import { useState } from "react";
 import styled from "styled-components";
-
-const CardContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 250px;
-  height: 350px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  transition: transform 0.5s ease-in-out;
-  transform-style: preserve-3d;
-  transform: ${({ isFlipped }: { isFlipped: boolean }) =>
-    isFlipped ? "rotateY(180deg)" : "none"};
-  cursor: pointer;
-`;
-const Perfil = styled(Image)`
-  border-radius: 15px;
-  width: 100%;
-  height: 100%;
-  &:hover {
-    opacity: 0.9;
-  }
-`;
-
-const CardFace = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-`;
-
-const CardFront = styled(CardFace)`
-  background-color: black;
-`;
-
-const CardBack = styled(CardFace)`
-  background-color: black;
-  border: 2px solid #9ec150;
-  border-radius: 10px;
-  transform: rotateY(180deg);
-`;
+import { MdInfoOutline, MdRotateRight } from "react-icons/md";
+import Link from "next/link";
+import FavoriteButton from "./favorites";
+import {
+  BottomBar,
+  CardBack,
+  CardContainer,
+  CardFront,
+  Perfil,
+} from "./card.styles";
 
 export default function Card({ character }: { character: ResultCharacter }) {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -55,11 +20,23 @@ export default function Card({ character }: { character: ResultCharacter }) {
   };
 
   return (
-    <CardContainer isFlipped={isFlipped} onClick={handleCardClick}>
+    <CardContainer isFlipped={isFlipped}>
       <CardFront>
         <Perfil src={character.image} layout="fill" alt={character.name} />
+        <BottomBar>
+          <FavoriteButton character={character} />
+          <Link
+            href={`/character/${character.id}`}
+            title={`Ir para página do ${character.name}`}
+          >
+            <MdInfoOutline />
+          </Link>
+          <button onClick={handleCardClick} title="girar a carta">
+            <MdRotateRight />
+          </button>
+        </BottomBar>
       </CardFront>
-      <CardBack>
+      <CardBack onClick={handleCardClick} title="voltar">
         <h3>{character.name}</h3>
         {character.species && <p>Species: {character.species}</p>}
         {character.gender && <p>Gender: {character.gender}</p>}

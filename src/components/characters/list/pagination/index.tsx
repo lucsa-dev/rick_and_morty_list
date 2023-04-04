@@ -1,8 +1,8 @@
+import { info } from "@/types/characters.type";
 import Link from "next/link";
 import styled from "styled-components";
-import { InfoProps } from "../../characters.type";
 
-export default function Pagination({ info }: { info: InfoProps }) {
+export default function Pagination({ info }: { info: info }) {
   const Button = styled(Link)`
     background-color: #9ec150;
     border: none;
@@ -15,6 +15,12 @@ export default function Pagination({ info }: { info: InfoProps }) {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      background-color: black;
+      color: #9ec150;
+      border: 1px solid #9ec150;
+    }
   `;
   const Control = styled.div`
     display: flex;

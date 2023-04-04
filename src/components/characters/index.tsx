@@ -9,9 +9,9 @@ export default function Characters() {
   const characters = useSelector(selectCharacters);
   return (
     <div>
-      <Pagination info={characters.info} />
       <SearchFilter />
       <List characters={characters.results} />
+      <Pagination info={characters.info} />
     </div>
   );
 }
