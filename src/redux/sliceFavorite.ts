@@ -1,31 +1,23 @@
-import { ReqRickAndMortyApi, ResultCharacter } from "@/types/characters.type";
+import { ResultCharacter } from "@/types/characters.type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const INITIAL_STATE: ReqRickAndMortyApi<ResultCharacter> = {
-  info: {
-    count: 0,
-    pages: 0,
-    next: "",
-    prev: "",
-  },
-  results: [],
-};
+const INITIAL_STATE: ResultCharacter[] = [];
 
-const sliceCharacters = createSlice({
-  name: "characters",
+const sliceFavorites = createSlice({
+  name: "favorites",
   initialState: INITIAL_STATE,
   reducers: {
-    setCharacters(
-      state,
-      { payload }: PayloadAction<ReqRickAndMortyApi<ResultCharacter>>
-    ) {
-      return payload;
+    addFavorite(state, { payload }: PayloadAction<ResultCharacter>) {
+      return [...state, payload];
+    },
+    removeFavorite(state, { payload }: PayloadAction<ResultCharacter>) {
+      return state.filter((item) => item.id !== payload.id);
     },
   },
 });
 
-export const { setCharacters } = sliceCharacters.actions;
-export default sliceCharacters.reducer;
+export const { addFavorite, removeFavorite } = sliceFavorites.actions;
+export default sliceFavorites.reducer;
 
-export const selectCharacters = (state: any) =>
-  state.characters as ReqRickAndMortyApi<ResultCharacter>;
+export const selectFavorites = (state: any) =>
+  state.favorites as ResultCharacter[];

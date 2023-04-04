@@ -1,7 +1,5 @@
 import { ResultCharacter } from "@/types/characters.type";
-import Image from "next/image";
 import { useState } from "react";
-import styled from "styled-components";
 import { MdInfoOutline, MdRotateRight } from "react-icons/md";
 import Link from "next/link";
 import FavoriteButton from "./favorites";

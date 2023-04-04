@@ -9,44 +9,34 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import Layout from "@/components/layout";
+import Character from "@/components/character";
 
-type HomeProps = {
-  characters: ReqRickAndMortyApi<ResultCharacter>;
+type CharacterProps = {
+  character: ResultCharacter;
 };
-export default function Home({ characters }: HomeProps) {
+export default function CharacterPage({ character }: CharacterProps) {
+  console.log("🚀 ~ file: [id].tsx:18 ~ Home ~ characters:", character);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch({
-      type: "characters/setCharacters",
-      payload: characters,
-    });
-  }, [characters, dispatch]);
 
   return (
     <Layout>
-      <Characters />
-      <Favorites />
+      <Character character={character} />
     </Layout>
   );
 }
 
 //serverside props
 export async function getServerSideProps(context: any) {
-  const query = context.query;
-  let path = `${process.env.NEXT_PUBLIC_SERVER_URL}/character`;
-
-  const queryParams = new URLSearchParams(query).toString();
-
-  if (queryParams) {
-    path = `${path}?${queryParams}`;
-  }
+  const id = context.query.id;
+  if (!id) return;
+  let path = `${process.env.NEXT_PUBLIC_SERVER_URL}/character/${id}`;
 
   const res = await fetch(path);
 
   const data = await res.json();
   return {
     props: {
-      characters: data,
+      character: data,
     },
   };
 }

@@ -9,6 +9,10 @@ const FormContainer = styled.form`
 
   @media (max-width: 768px) {
     flex-direction: column;
+    & * {
+      text-align: center;
+      margin: 0 auto;
+    }
   }
 `;
 

@@ -1,12 +1,11 @@
 import { info } from "@/types/characters.type";
 import Link from "next/link";
 import styled from "styled-components";
+import { GrPrevious, GrNext } from "react-icons/gr";
 
 export default function Pagination({ info }: { info: info }) {
   const Button = styled(Link)`
-    background-color: #9ec150;
     border: none;
-    color: black;
     weight: extra-bold;
     padding: 15px 32px;
     text-align: center;
@@ -16,10 +15,12 @@ export default function Pagination({ info }: { info: info }) {
     margin: 4px 2px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+    background-color: black;
+    color: #9ec150;
+    border: 1px solid #9ec150;
+    background-color: #9ec150;
     &:hover {
-      background-color: black;
-      color: #9ec150;
-      border: 1px solid #9ec150;
+      color: black;
     }
   `;
   const Control = styled.div`
@@ -34,8 +35,16 @@ export default function Pagination({ info }: { info: info }) {
 
   return (
     <Control>
-      {prevPage && <Button href={`/?page=${prevPage}`}>PREV</Button>}
-      {nextPage && <Button href={`/?page=${nextPage}`}>NEXT</Button>}
+      {prevPage && (
+        <Button href={`/?page=${prevPage}`} title="Voltar para página anterior">
+          <GrPrevious />
+        </Button>
+      )}
+      {nextPage && (
+        <Button href={`/?page=${nextPage}`} title="Ir para próxima página">
+          <GrNext />
+        </Button>
+      )}
     </Control>
   );
 }
