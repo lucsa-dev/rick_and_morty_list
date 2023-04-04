@@ -20,3 +20,6 @@ To run this project in your machine, you must have NodeJS installed. Once you ha
 ## Usage
 
 Once you open the application in your browser, you will be presented with a list of all the characters. From here, you can click on a character to view their details or click the heart icon to favorite them. Additionally, you can use the filter panel to filter the list of characters by gender, name, species, and status.
+
+## Preview
+<a href="https://rick-and-morty-list-six.vercel.app">https://rick-and-morty-list-six.vercel.app </a>
